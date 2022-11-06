@@ -518,9 +518,12 @@ _deps
 # Binaries for programs and plugins
 *.exe~
 
+<<<<<<< HEAD
 # go.mod conflicting with fortran module files
 !*go.mod
 
+=======
+>>>>>>> e264934 (Initialize develop)
 # Test binary, built with `go test -c`
 *.test
 
@@ -1236,4 +1239,8 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
+<<<<<<< HEAD
 .mvn/wrapper/maven-wrapper.jar
+=======
+.mvn/wrapper/maven-wrapper.jar
+>>>>>>> e264934 (Initialize develop)

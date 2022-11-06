@@ -1,7 +1,11 @@
 openapi: 3.0.1
 info:
   title: OpenAPI definition
+<<<<<<< HEAD
   version: v1
+=======
+  version: v0
+>>>>>>> e264934 (Initialize develop)
 servers:
 - url: http://localhost:8080
 paths:
