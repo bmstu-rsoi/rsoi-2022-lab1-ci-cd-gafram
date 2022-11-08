@@ -1,10 +1,13 @@
 from fastapi import FastAPI, status, Body
 from fastapi.responses import JSONResponse, Response
+from fastapi.exceptions import RequestValidationError
+from fastapi.requests import Request
 import psycopg2
 from pydantic.dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Union
 import json
 from pydantic.json import pydantic_encoder
+
 
 app = FastAPI()
 
@@ -109,30 +112,36 @@ def get_all_persons():
 
 @app.post("/api/v1/persons")
 def post_person(person: PersonReq):
-    if person:
-        new_person_id = person_insert(person)
-        headers = {'Location': f'/api/v1/persons/{new_person_id}'}
-        return JSONResponse(content="Created new person",
-                            headers=headers,
-                            status_code=status.HTTP_201_CREATED)
-    else:
+
+    @app.exception_handler(RequestValidationError)
+    async def validation_exception_handler(request: Request, exc: RequestValidationError):
         return JSONResponse(content="Invalid data",
                             status_code=status.HTTP_400_BAD_REQUEST)
 
+    new_person_id = person_insert(person)
+    headers = {'Location': f'/api/v1/persons/{new_person_id}'}
+    return JSONResponse(content="Created new person",
+                        headers=headers,
+                        status_code=status.HTTP_201_CREATED)
+
 
 @ app.patch("/api/v1/persons/{person_id}")
-def patch_person(person_id, person: PersonReq):
+def patch_person(person_id: int, person: PersonReq):
+
+    @app.exception_handler(RequestValidationError)
+    async def validation_exception_handler(request: Request, exc: RequestValidationError):
+        return JSONResponse(content="Invalid data",
+                            status_code=status.HTTP_400_BAD_REQUEST)
+
     person_by_id = get_person_by_id(person_id)
-    if person_by_id:
-        if person:
-            person = person_patch(person_id, person)
-            content = json.dumps(person, default=pydantic_encoder)
-            headers = {'Content-Type': 'application/json'}
-            return Response(content=content,
-                            headers=headers,
-                            status_code=status.HTTP_200_OK)
-        else:
-            return Response(status_code=status.HTTP_400_BAD_REQUEST)
+
+    if person_by_id != None:
+        person = person_patch(person_id, person)
+        content = json.dumps(person, default=pydantic_encoder)
+        headers = {'Content-Type': 'application/json'}
+        return Response(content=content,
+                        headers=headers,
+                        status_code=status.HTTP_200_OK)
     else:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 

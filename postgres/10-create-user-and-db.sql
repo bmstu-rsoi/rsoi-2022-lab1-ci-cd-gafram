@@ -7,8 +7,8 @@ ALTER ROLE program WITH LOGIN;
 CREATE TABLE persons
 (
     "Id" SERIAL PRIMARY KEY,
-    "Name" CHARACTER VARYING(30),
-    "Age" INTEGER
-    "Work" CHARACTER VARYING(30),
-    "Address" CHARACTER VARYING(50),
+    "Name" VARCHAR(30),
+    "Age" INTEGER,
+    "Work" VARCHAR(30),
+    "Address" VARCHAR(50)
 );
