@@ -13,4 +13,4 @@ COPY src/ /app/
 
 WORKDIR /app
 
-CMD ["uvicorn", "app:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["python3", "app.py"]

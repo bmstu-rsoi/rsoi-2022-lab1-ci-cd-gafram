@@ -8,12 +8,17 @@ from typing import Optional, Union
 import json
 from pydantic.json import pydantic_encoder
 import os
+import uvicorn
 
 
 app = FastAPI()
 
-DATABASE_URI = os.getenv('DATABASE_URL').replace(
-    'postgres://', 'postgresql://')
+port = os.environ.get('PORT')
+if port is None:
+    port = 8080
+
+
+DATABASE_URI = os.getenv('DATABASE_URL')
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 # conn = psycopg2.connect(dbname='persons', user='program',
 # password='test', host='0.0.0.0')
@@ -154,3 +159,7 @@ def patch_person(person_id: int, person: PersonReq):
 def delete_person(person_id: int):
     person_delete(person_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=port)
