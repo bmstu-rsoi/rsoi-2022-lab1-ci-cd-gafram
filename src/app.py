@@ -7,12 +7,18 @@ from pydantic.dataclasses import dataclass
 from typing import Optional, Union
 import json
 from pydantic.json import pydantic_encoder
+import os
 
 
 app = FastAPI()
 
+
+# DATABASE_URL = 'postgresql://program:test@0:5432/persons'
+# DATABASE_URI = os.getenv('DATABASE_URL').replace(
+#     'postgres://', 'postgresql://')
+# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 conn = psycopg2.connect(dbname='persons', user='program',
-                        password='test', host='localhost')
+                        password='test', host='0.0.0.0')
 
 
 @dataclass
