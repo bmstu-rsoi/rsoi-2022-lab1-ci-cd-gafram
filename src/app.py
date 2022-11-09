@@ -18,7 +18,7 @@ if port is None:
     port = 8080
 
 
-DATABASE_URI = os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv('DATABASE_URL')
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 # conn = psycopg2.connect(dbname='persons', user='program',
 # password='test', host='0.0.0.0')
