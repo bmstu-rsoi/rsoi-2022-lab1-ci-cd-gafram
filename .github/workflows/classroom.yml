@@ -14,7 +14,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
+          
+      - name: Deploy project
+        uses: akhileshns/heroku-deploy@v3.4.6
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: gafram-rsoi-lab1
+          heroku_email: ramilgf16@gmail.com
+          usedocker: true
       # TODO build, test and deploy project
 
       - name: Run API Tests
