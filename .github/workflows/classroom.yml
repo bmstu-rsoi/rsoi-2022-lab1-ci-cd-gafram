@@ -19,6 +19,7 @@ jobs:
           fetch-depth: 0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       # TODO build, test and deploy project
 
       - name: Run API Tests
@@ -31,6 +32,16 @@ jobs:
 
 =======
 >>>>>>> e264934 (Initialize develop)
+=======
+      - name: Deploy project
+        uses: akhileshns/heroku-deploy@v3.4.6
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: gafram-rsoi-lab1
+          heroku_email: ramilgf16@gmail.com
+          usedocker: true
+
+>>>>>>> f71f9a1 (build(app): add Heroku config)
       - name: Autograding
         uses: education/autograding@v1
         continue-on-error: true
